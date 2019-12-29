@@ -19,7 +19,7 @@ public enum ReimbursementStatus {
 	 }
 	 
 	 //to get a status from the db value
-	public ReimbursementStatus getStatus(int value) {
+	public static ReimbursementStatus getStatus(int value) {
 		for(ReimbursementStatus status : ReimbursementStatus.values()) {
 			if(status.getValue() == value) {
 				return status;

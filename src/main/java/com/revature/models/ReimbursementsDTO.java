@@ -3,7 +3,7 @@ package com.revature.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Reimbursements implements Serializable{
+public class ReimbursementsDTO implements Serializable{
 	private String description;
 	private int id;
 	private double amount;
@@ -11,17 +11,17 @@ public class Reimbursements implements Serializable{
 	private ReimbursementType type;
 	private Employee author;
 	private Employee resolver; 
-	private LocalDateTime submitted;
-	private LocalDateTime resolved;
+	private String submitted;
+	private String resolved;
 	private static final long serialVersionUID = 1L;
 	
 	//constructors
-	public Reimbursements() {
+	public ReimbursementsDTO() {
 		super();
 	}
 	
-	public Reimbursements(int id, String description, double amount, int status, int type,
-			Employee author, Employee resolver, LocalDateTime submitted, LocalDateTime resolved) {
+	public ReimbursementsDTO(int id, String description, double amount, int status, int type,
+			Employee author, Employee resolver, String submitted, String resolved) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -77,21 +77,20 @@ public class Reimbursements implements Serializable{
 		this.resolver = resolver;
 	}
 
-	public LocalDateTime getSubmitted() {
+	public String getSubmitted() {
 		return submitted;
 	}
 
-	public void setSubmitted(LocalDateTime submitted) {
+	public void setSubmitted(String submitted) {
 		this.submitted = submitted;
 	}
 
-	public LocalDateTime getResolved() {
+	public String getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(LocalDateTime resolved) {
+	public void setResolved(String resolved) {
 		this.resolved = resolved;
 	}
-	
 	
 }

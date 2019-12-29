@@ -19,7 +19,7 @@ public enum ReimbursementType {
 	}
 	
 	//for getting a type value to return to the app from the db
-	public ReimbursementType getType(int value) {
+	public static ReimbursementType getType(int value) {
 		for(ReimbursementType type : ReimbursementType.values()) {
 			if(type.getValue() == value) {
 				return type;
