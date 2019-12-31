@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Reimbursements implements Serializable{
@@ -11,8 +12,8 @@ public class Reimbursements implements Serializable{
 	private ReimbursementType type;
 	private Employee author;
 	private Employee resolver; 
-	private LocalDateTime submitted;
-	private LocalDateTime resolved;
+	private Timestamp submitted;
+	private Timestamp resolved;
 	private static final long serialVersionUID = 1L;
 	
 	//constructors
@@ -21,7 +22,7 @@ public class Reimbursements implements Serializable{
 	}
 	
 	public Reimbursements(int id, String description, double amount, int status, int type,
-			Employee author, Employee resolver, LocalDateTime submitted, LocalDateTime resolved) {
+			Employee author, Employee resolver, Timestamp submitted, Timestamp resolved) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -77,19 +78,19 @@ public class Reimbursements implements Serializable{
 		this.resolver = resolver;
 	}
 
-	public LocalDateTime getSubmitted() {
+	public Timestamp getSubmitted() {
 		return submitted;
 	}
 
-	public void setSubmitted(LocalDateTime submitted) {
+	public void setSubmitted(Timestamp submitted) {
 		this.submitted = submitted;
 	}
 
-	public LocalDateTime getResolved() {
+	public Timestamp getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(LocalDateTime resolved) {
+	public void setResolved(Timestamp resolved) {
 		this.resolved = resolved;
 	}
 	
