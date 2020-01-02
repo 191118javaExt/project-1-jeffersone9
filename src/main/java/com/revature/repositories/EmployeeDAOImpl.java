@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.revature.models.Employee;
+import com.revature.models.EmployeeRole;
 import com.revature.util.ConnectionUtil;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-	private static Logger logger = Logger.getLogger(EmployeeDAOImpl.class);
+	private static Logger logger = LogManager.getLogger(EmployeeDAOImpl.class);
 	@Override
 	public List<Employee> findAll() {
 		List<Employee> employees = new ArrayList<>();
@@ -30,7 +32,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String last = rs.getString("user_last_name");
 				String email = rs.getString("user_email");
 				int role = rs.getInt("user_role_id");
-				Employee emp = new Employee();
+				Employee emp = new Employee(id, user, pass, first, last, email, EmployeeRole.getRole(role));
 				employees.add(emp);
 			}
 			rs.close();
@@ -55,6 +57,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				String last = rs.getString("user_last_name");
 				String email = rs.getString("user_email");
 				int role = rs.getInt("user_role_id");
+				emp.setId(id);
+				emp.setUsername(user);
+				emp.setPassword(pass);
+				emp.setFirstName(first);
+				emp.setLastName(last);
+				emp.setEmail(email);
+				emp.setRole(EmployeeRole.getRole(role));
 			}
 			rs.close();
 		}catch(SQLException e) {
@@ -64,8 +73,27 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	@Override
 	public boolean insert(Employee e) {
-		// TODO Auto-generated method stub
-		return false;
+		PreparedStatement stmnt = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "INSERT INTO project1.ers_users VALUES(?, ?, ?, ?, ?, ?, ?);";
+			stmnt = conn.prepareStatement(sql);
+			stmnt.setInt(1, e.getId());
+			stmnt.setString(2,  e.getUsername());
+			stmnt.setString(3, e.getPassword());
+			stmnt.setString(4, e.getFirstName());
+			stmnt.setString(5,  e.getLastName());
+			stmnt.setString(6,  e.getEmail());
+			stmnt.setInt(7, e.getRole().getValue());
+			if(!stmnt.execute()) {
+				return false;
+			}
+		}catch(SQLException ex) {
+			logger.warn("Could not create new employee for database", ex);
+		}finally {
+			//TODO: create CloseStreams class in util package
+			//CloseStreams.close(stmnt);
+		}
+		return true;
 	}
 
 

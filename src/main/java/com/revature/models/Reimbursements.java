@@ -8,10 +8,13 @@ public class Reimbursements implements Serializable{
 	private String description;
 	private int id;
 	private double amount;
+	private byte[] receipt;
 	private ReimbursementStatus status;
 	private ReimbursementType type;
 	private Employee author;
 	private Employee resolver; 
+	private int authorId;
+	private int resolverId;
 	private Timestamp submitted;
 	private Timestamp resolved;
 	private static final long serialVersionUID = 1L;
@@ -21,16 +24,16 @@ public class Reimbursements implements Serializable{
 		super();
 	}
 	
-	public Reimbursements(int id, String description, double amount, int status, int type,
-			Employee author, Employee resolver, Timestamp submitted, Timestamp resolved) {
+	public Reimbursements(int id, String description, byte[] receipt, double amount, int status, int type,
+			int author, int resolver, Timestamp submitted, Timestamp resolved) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.amount = amount;
 		this.status = ReimbursementStatus.getStatus(status);
 		this.type = ReimbursementType.getType(type);
-		this.author = author;
-		this.resolver = resolver;
+		this.authorId = author;
+		this.resolverId = resolver;
 		this.submitted = submitted;
 		this.resolved = resolved;
 	}
@@ -93,6 +96,32 @@ public class Reimbursements implements Serializable{
 	public void setResolved(Timestamp resolved) {
 		this.resolved = resolved;
 	}
+
+	public int getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+
+	public int getResolverId() {
+		return resolverId;
+	}
+
+	public void setResolverId(int resolverId) {
+		this.resolverId = resolverId;
+	}
+
+	public byte[] getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(byte[] receipt) {
+		this.receipt = receipt;
+	}
+	
+	
 	
 	
 }

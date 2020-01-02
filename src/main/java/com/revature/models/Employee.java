@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 //employee will have a date version for hire date to get from db
 public class Employee implements Serializable {
 
+	private int id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -13,6 +14,21 @@ public class Employee implements Serializable {
 	private String email;
 	private EmployeeRole role;
 	private static final long serialVersionUID = 1L;
+	
+	//constructors
+	public Employee() {
+		super();
+	}
+	
+	public Employee(int id, String username, String password, String fName, String lName, String email, EmployeeRole role) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.firstName = fName;
+		this.lastName = lName;
+		this.role = role;
+	}
 	//getters and setters
 	
 	public String getUsername() {
@@ -50,5 +66,11 @@ public class Employee implements Serializable {
 	}
 	public void setRole(EmployeeRole role) {
 		this.role = role;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

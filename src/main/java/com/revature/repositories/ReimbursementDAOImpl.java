@@ -8,14 +8,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import com.revature.models.ReimbursementStatus;
+import com.revature.models.ReimbursementType;
 import com.revature.models.Reimbursements;
 import com.revature.util.ConnectionUtil;
 
 public class ReimbursementDAOImpl implements ReimbursementDAO {
 	
-	private static Logger logger = Logger.getLogger(ReimbursementDAOImpl.class);
+	private static Logger logger = LogManager.getLogger(ReimbursementDAOImpl.class);
 	@Override
 	public List<Reimbursements> findAll() {
 		List<Reimbursements> reimbursements = new ArrayList<>();
@@ -35,9 +38,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				int resolverId = rs.getInt("reimb_resolver");
 				int status = rs.getInt("reimb_status_id");
 				int type = rs.getInt("reimb_type_id");
-				Reimbursements r = new Reimbursements();
-				//TODO: finish employee service and have this service
-				//use the call by id function
+				Reimbursements r = new Reimbursements(id, description, receipt, amount, status, type, authorId, resolverId, submitted, resolved);
 				reimbursements.add(r);
 			}
 			rs.close();
@@ -67,6 +68,16 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				int resolverId = rs.getInt("reimb_resolver");
 				int status = rs.getInt("reimb_status_id");
 				int type = rs.getInt("reimb_type_id");
+				r.setId(id);
+				r.setAmount(amount);
+				r.setSubmitted(submitted);
+				r.setResolved(resolved);
+				r.setDescription(description);
+				r.setReceipt(receipt);
+				r.setAuthorId(authorId);
+				r.setResolverId(resolverId);
+				r.setStatus(ReimbursementStatus.getStatus(status));
+				r.setType(ReimbursementType.getType(type));
 			}
 			rs.close();
 		}catch(SQLException e) {
@@ -77,8 +88,32 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	
 	@Override
 	public boolean insert(Reimbursements r) {
-		// TODO Auto-generated method stub
-		return false;
+		PreparedStatement stmnt = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "INSERT INTO project1.ers_reimbursement VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			stmnt = conn.prepareStatement(sql);
+			stmnt.setInt(1, r.getId());
+			stmnt.setDouble(2, r.getAmount());
+			stmnt.setTimestamp(3, r.getSubmitted());
+			stmnt.setTimestamp(4, r.getResolved());
+			stmnt.setString(5, r.getDescription());
+			stmnt.setBytes(6, r.getReceipt());
+			stmnt.setInt(7, r.getAuthorId());
+			stmnt.setInt(8, r.getResolverId());
+			stmnt.setInt(9, r.getStatus().getValue());
+			stmnt.setInt(10, r.getType().getValue());
+			if(!stmnt.execute())
+			{
+				return false;
+			}
+		}catch(SQLException e) {
+			logger.warn("Database failed to insert reimbursements", e);
+			return false;
+		}finally {
+			//TODO:Create a close streams object in the util package
+			//CloseStreams.close(stmnt);
+		}
+		return true;
 	}
 
 

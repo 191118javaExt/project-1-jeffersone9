@@ -13,7 +13,7 @@ public enum EmployeeRole {
 		return this.value;
 	}
 	
-	public EmployeeRole getRole(int value) {
+	public static EmployeeRole getRole(int value) {
 		for(EmployeeRole role : EmployeeRole.values()) {
 			if(role.getValue() == value) {
 				return role;
