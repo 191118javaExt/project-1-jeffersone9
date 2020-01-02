@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
 import com.revature.models.Reimbursements;
+import com.revature.util.CloseStreams;
 import com.revature.util.ConnectionUtil;
 
 public class ReimbursementDAOImpl implements ReimbursementDAO {
@@ -41,7 +42,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				Reimbursements r = new Reimbursements(id, description, receipt, amount, status, type, authorId, resolverId, submitted, resolved);
 				reimbursements.add(r);
 			}
-			rs.close();
+			CloseStreams.close(rs);
 			
 		}catch(SQLException e) {
 			logger.warn("Unable to get reimbursements from database", e);
@@ -79,7 +80,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				r.setStatus(ReimbursementStatus.getStatus(status));
 				r.setType(ReimbursementType.getType(type));
 			}
-			rs.close();
+			CloseStreams.close(rs);
 		}catch(SQLException e) {
 			logger.warn("Reimbursement not found", e);
 		}
@@ -110,8 +111,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			logger.warn("Database failed to insert reimbursements", e);
 			return false;
 		}finally {
-			//TODO:Create a close streams object in the util package
-			//CloseStreams.close(stmnt);
+			CloseStreams.close(stmnt);
 		}
 		return true;
 	}

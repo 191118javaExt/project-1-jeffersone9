@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.models.Employee;
 import com.revature.models.EmployeeRole;
+import com.revature.util.CloseStreams;
 import com.revature.util.ConnectionUtil;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -35,7 +36,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				Employee emp = new Employee(id, user, pass, first, last, email, EmployeeRole.getRole(role));
 				employees.add(emp);
 			}
-			rs.close();
+			CloseStreams.close(rs);
 		}catch(SQLException e) {
 			logger.warn("Could not get employees from the db", e);
 		}
@@ -65,7 +66,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				emp.setEmail(email);
 				emp.setRole(EmployeeRole.getRole(role));
 			}
-			rs.close();
+			CloseStreams.close(rs);
 		}catch(SQLException e) {
 			logger.warn("Could not get the employee from the db", e);
 		}
@@ -90,8 +91,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}catch(SQLException ex) {
 			logger.warn("Could not create new employee for database", ex);
 		}finally {
-			//TODO: create CloseStreams class in util package
-			//CloseStreams.close(stmnt);
+			CloseStreams.close(stmnt);
 		}
 		return true;
 	}
