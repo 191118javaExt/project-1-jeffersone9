@@ -20,6 +20,7 @@ import com.revature.models.LoginTemplate;
 import com.revature.services.EmployeeService;
 
 public class LoginServlet extends HttpServlet{
+	
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LogManager.getLogger(LoginServlet.class);
 	private static ObjectMapper om = new ObjectMapper();

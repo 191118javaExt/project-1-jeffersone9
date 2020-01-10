@@ -22,7 +22,7 @@ public class RequestHelper {
 	//this will be used to convert the login object into a json
 	private static ObjectMapper om = new ObjectMapper();
 	
-	private static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException{
+	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		BufferedReader reader = req.getReader();
 		StringBuilder s = new StringBuilder();
 		String line = reader.readLine();
