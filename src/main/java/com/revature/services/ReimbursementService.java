@@ -3,20 +3,26 @@ package com.revature.services;
 import java.util.List;
 
 import com.revature.models.Reimbursements;
+import com.revature.models.ReimbursementsDTO;
 import com.revature.repositories.ReimbursementDAOImpl;
 
 public class ReimbursementService {
-	private static ReimbursementDAOImpl repository = new ReimbursementDAOImpl();
 	
 	public static List<Reimbursements> findAll(){
-		return repository.findAll();
+		return new ReimbursementDAOImpl().findAll();
 	}
 	
 	public static Reimbursements findById(int id) {
-		return repository.findById(id);
+		return new ReimbursementDAOImpl().findById(id);
 	}
 	
 	public static boolean insert(Reimbursements r) {
-		return repository.insert(r);
+		return new ReimbursementDAOImpl().insert(r);
+	}
+	
+	public static ReimbursementsDTO convertToDTO(Reimbursements r) {
+		return new ReimbursementsDTO(r.getId(), r.getDescription(), r.getAmount(),
+									r.getStatus(), r.getType(), r.getAuthor(), r.getResolver(),
+									r.getSubmitted().toString(), r.getResolved().toString());
 	}
 }

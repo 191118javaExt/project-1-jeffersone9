@@ -20,14 +20,14 @@ public class ReimbursementsDTO implements Serializable{
 		super();
 	}
 	
-	public ReimbursementsDTO(int id, String description, double amount, int status, int type,
+	public ReimbursementsDTO(int id, String description, double amount, ReimbursementStatus status, ReimbursementType type,
 			Employee author, Employee resolver, String submitted, String resolved) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.amount = amount;
-		this.status = ReimbursementStatus.getStatus(status);
-		this.type = ReimbursementType.getType(type);
+		this.status = status;
+		this.type = type;
 		this.author = author;
 		this.resolver = resolver;
 		this.submitted = submitted;

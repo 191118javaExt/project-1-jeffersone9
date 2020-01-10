@@ -6,17 +6,41 @@ import com.revature.models.Employee;
 import com.revature.repositories.EmployeeDAOImpl;
 
 public class EmployeeService {
-	private static EmployeeDAOImpl repository = new EmployeeDAOImpl();
 	
 	public static List<Employee> findAll(){
-		return repository.findAll();
+		return new EmployeeDAOImpl().findAll();
 	}
 	
 	public static Employee findById(int id) {
-		return repository.findById(id);
+		return new EmployeeDAOImpl().findById(id);
 	}
 	
 	public static boolean insert(Employee e) {
-		return repository.insert(e);
+		return new EmployeeDAOImpl().insert(e);
 	}
+	
+	//have the service search for employees by username
+	public static Employee findByUsername(String username) {
+		List<Employee> employees = new EmployeeDAOImpl().findAll();
+		for(Employee e : employees) {
+			if(e.getUsername().equals(username)) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
+	public static Employee login(String username, String password) {
+		Employee e = findByUsername(username);
+		if(e == null) {
+			return null;
+		}
+		
+		if(e.getPassword().equals(password)) {
+			return e;
+		} else {
+			return null;
+		}
+	}
+	
 }
