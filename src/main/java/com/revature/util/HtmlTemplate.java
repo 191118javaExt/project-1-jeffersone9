@@ -17,7 +17,7 @@ public class HtmlTemplate {
 	
 	//TODO: I dont fully understand res.setContentType
 	public static PrintWriter getHtmlWriter(HttpServletResponse res) throws IOException{
-		res.setContentType("");
+		res.setContentType("application/json");
 		return res.getWriter();
 	}
 	

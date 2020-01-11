@@ -18,7 +18,7 @@ import com.revature.models.LoginTemplate;
 import com.revature.services.EmployeeService;
 
 public class RequestHelper {
-	private static Logger logger = LogManager.getLogger(RequestHelper.class);
+	private static Logger logger = LogManager.getLogger(RequestHelper.class.getName());
 	//this will be used to convert the login object into a json
 	private static ObjectMapper om = new ObjectMapper();
 	
@@ -67,6 +67,7 @@ public class RequestHelper {
 	}
 	
 	public static void processEmployees(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		System.out.println("In empoyee response");
 		res.setContentType("application/json");
 		List<Employee> all = EmployeeService.findAll();
 		String json = om.writeValueAsString(all);

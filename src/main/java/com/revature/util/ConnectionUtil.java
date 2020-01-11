@@ -16,7 +16,7 @@ public class ConnectionUtil {
 		
 		//first lets make sure the Driver class is initialized
 		try {
-			Class.forName("org.posgresql.Driver");
+			Class.forName("org.postgresql.Driver");
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
