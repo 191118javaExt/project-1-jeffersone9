@@ -30,6 +30,8 @@ public class FrontController extends HttpServlet{
 		case "employees": RequestHelper.processEmployees(req, res);
 			System.out.println("post was sent");
 			break;
+		case "reimbursements": RequestHelper.processReimbursements(req, res);
+			break;
 		//TODO: add reimbursement
 		}
 	}

@@ -3,6 +3,7 @@ package com.revature.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,10 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
 import com.revature.models.LoginTemplate;
+import com.revature.models.Reimbursements;
+import com.revature.models.ReimbursementsDTO;
 import com.revature.services.EmployeeService;
+import com.revature.services.ReimbursementService;
 
 public class RequestHelper {
 	private static Logger logger = LogManager.getLogger(RequestHelper.class.getName());
@@ -74,5 +78,20 @@ public class RequestHelper {
 		PrintWriter out = res.getWriter();
 		out.println(json);
 	}
-	//TODO: Need to process adding and getting reimbursements
+	
+	public static void processReimbursements(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		logger.info("Attemptint to get reimbursement response");
+		res.setContentType("application/json");
+		List<Reimbursements> all = ReimbursementService.findAll();
+		List<ReimbursementsDTO> reimbursements = new ArrayList<>();
+		for(Reimbursements r : all) {
+			ReimbursementsDTO rd = new ReimbursementsDTO(r.getId(), r.getDescription(), r.getReceipt(), r.getAmount(),
+									r.getStatus(), r.getType(), r.getAuthor(), r.getResolver(),
+									r.getSubmitted().toString(), r.getResolved().toString());
+			reimbursements.add(rd);
+		}
+		String json = om.writeValueAsString(reimbursements);
+		PrintWriter out = res.getWriter();
+		out.println(json);
+	}
 }

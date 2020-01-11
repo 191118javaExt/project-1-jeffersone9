@@ -13,6 +13,7 @@ public class ReimbursementsDTO implements Serializable{
 	private Employee resolver; 
 	private String submitted;
 	private String resolved;
+	private byte[] receipt;
 	private static final long serialVersionUID = 1L;
 	
 	//constructors
@@ -20,11 +21,12 @@ public class ReimbursementsDTO implements Serializable{
 		super();
 	}
 	
-	public ReimbursementsDTO(int id, String description, double amount, ReimbursementStatus status, ReimbursementType type,
+	public ReimbursementsDTO(int id, String description, byte[] receipt, double amount, ReimbursementStatus status, ReimbursementType type,
 			Employee author, Employee resolver, String submitted, String resolved) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.receipt = receipt;
 		this.amount = amount;
 		this.status = status;
 		this.type = type;
@@ -91,6 +93,14 @@ public class ReimbursementsDTO implements Serializable{
 
 	public void setResolved(String resolved) {
 		this.resolved = resolved;
+	}
+
+	public byte[] getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(byte[] receipt) {
+		this.receipt = receipt;
 	}
 	
 }

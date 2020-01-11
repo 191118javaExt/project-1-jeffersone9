@@ -18,6 +18,7 @@ public class EmployeeServlet extends HttpServlet{
 	private static ObjectMapper om = new ObjectMapper();
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+		System.out.println("I don't think this is ever called");
 		res.setContentType("application/json");
 		List<Employee> all = EmployeeService.findAll();
 		

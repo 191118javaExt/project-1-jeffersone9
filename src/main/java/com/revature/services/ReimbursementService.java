@@ -21,7 +21,7 @@ public class ReimbursementService {
 	}
 	
 	public static ReimbursementsDTO convertToDTO(Reimbursements r) {
-		return new ReimbursementsDTO(r.getId(), r.getDescription(), r.getAmount(),
+		return new ReimbursementsDTO(r.getId(), r.getDescription(), r.getReceipt(), r.getAmount(),
 									r.getStatus(), r.getType(), r.getAuthor(), r.getResolver(),
 									r.getSubmitted().toString(), r.getResolved().toString());
 	}
