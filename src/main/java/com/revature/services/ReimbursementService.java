@@ -20,6 +20,10 @@ public class ReimbursementService {
 		return new ReimbursementDAOImpl().insert(r);
 	}
 	
+	public static boolean update(Reimbursements r, int id) {
+		return new ReimbursementDAOImpl().update(r, id);
+	}
+	
 	public static ReimbursementsDTO convertToDTO(Reimbursements r) {
 		return new ReimbursementsDTO(r.getId(), r.getDescription(), r.getReceipt(), r.getAmount(),
 									r.getStatus(), r.getType(), r.getAuthor(), r.getResolver(),

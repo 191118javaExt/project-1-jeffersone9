@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  username: string = '';
+  password: string = '';
+
+  constructor(private us: UserService, private route: Router) { }
 
   ngOnInit() {
   }
 
+  sendLogin() {
+    console.log("Is login being called");
+    this.us.login(this.username, this.password).subscribe(
+      (response: User) => {
+        console.log("Are we getting a response");
+        sessionStorage.setItem('currentUser', JSON.stringify(response));
+        console.log(response);
+        this.route.navigate(['/profile']);
+      }
+    )
+  }
 }

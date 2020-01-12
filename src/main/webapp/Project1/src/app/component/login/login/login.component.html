@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Login</h1>
+            <form>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Username:</span>
+                    </div>
+                    <input [(ngModel)]="username" type="text" class="form-control" placeholder="username" name="username" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Password:</span>
+                    </div>
+                    <input [(ngModel)]="password" type="password" class="form-control" placeholder="password" name="password" required>
+                </div>
+                <button (click)="sendLogin()" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>>

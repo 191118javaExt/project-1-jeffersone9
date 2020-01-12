@@ -116,5 +116,38 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		return true;
 	}
 
+	@Override
+	public boolean update(Reimbursements r, int id) {
+		PreparedStatement stmnt = null;
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE project1.ers_reimbursement " +
+					"SET reimb_amount = ?, reimb_submitted = ? " + 
+					"reimb_resolved = ?, reimb_description = ?, reimb_receipt = ? " +
+					"reimb_auther = ?, reimb_resolver = ?, reimb_status_id = ? " +
+					"reimb_type_id = ? WHERE reimb_id = ?";
+			stmnt = conn.prepareStatement(sql);
+			stmnt.setDouble(1, r.getAmount());
+			stmnt.setTimestamp(2, r.getSubmitted());
+			stmnt.setTimestamp(3, r.getResolved());
+			stmnt.setString(4, r.getDescription());
+			stmnt.setBytes(5, r.getReceipt());
+			stmnt.setInt(6, r.getAuthorId());
+			stmnt.setInt(7, r.getResolverId());
+			stmnt.setInt(8, r.getStatus().getValue());
+			stmnt.setInt(9, r.getType().getValue());
+			stmnt.setInt(10, r.getId());
+			if(!stmnt.execute())
+			{
+				return false;
+			}
+		}catch(SQLException e) {
+			logger.warn("Database failed to update reimbursements", e);
+			return false;
+		}finally {
+			CloseStreams.close(stmnt);
+		}
+		return true;
+	}
+
 
 }

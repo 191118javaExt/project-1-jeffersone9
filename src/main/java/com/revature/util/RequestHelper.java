@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
 import com.revature.models.LoginTemplate;
+import com.revature.models.ReimbursementTemplate;
 import com.revature.models.Reimbursements;
 import com.revature.models.ReimbursementsDTO;
 import com.revature.services.EmployeeService;
@@ -28,6 +29,7 @@ public class RequestHelper {
 	
 	public static void processLogin(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		BufferedReader reader = req.getReader();
+		
 		StringBuilder s = new StringBuilder();
 		String line = reader.readLine();
 		while(line != null) {
@@ -54,6 +56,7 @@ public class RequestHelper {
 			logger.info(username + " has successfully logged in");
 		}
 		else {
+			logger.info(username + "failed to login");
 			res.setContentType("application/json");
 			res.setStatus(204);
 		}
@@ -93,5 +96,33 @@ public class RequestHelper {
 		String json = om.writeValueAsString(reimbursements);
 		PrintWriter out = res.getWriter();
 		out.println(json);
+	}
+	
+	public static void updateReimbursements(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		logger.info("Attempting to update reimbursement");
+		//grab the body of the response
+		BufferedReader reader = req.getReader();
+		StringBuilder s = new StringBuilder();
+		String line = reader.readLine();
+		while(line != null) {
+			s.append(line);
+			line = reader.readLine();
+		}
+		String body = s.toString();
+		System.out.println(body);
+		ReimbursementTemplate reimbursementTemplate = om.readValue(body, ReimbursementTemplate.class);
+		int id = reimbursementTemplate.getId();
+		Reimbursements r = ReimbursementService.findById(id);
+		if(r != null) {
+			HttpSession session = req.getSession();
+			PrintWriter out = res.getWriter();
+			out.println(om.writeValueAsString(r));
+			ReimbursementService.update(r, r.getId());
+			res.setStatus(200);
+		} else {
+			
+			res.setContentType("application/json");
+			res.setStatus(204);
+		}
 	}
 }
