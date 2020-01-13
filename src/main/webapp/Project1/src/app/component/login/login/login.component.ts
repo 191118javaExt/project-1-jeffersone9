@@ -19,10 +19,8 @@ export class LoginComponent implements OnInit {
   }
 
   sendLogin() {
-    console.log("Is login being called");
     this.us.login(this.username, this.password).subscribe(
       (response: User) => {
-        console.log("Are we getting a response");
         sessionStorage.setItem('currentUser', JSON.stringify(response));
         console.log(response);
         this.route.navigate(['/profile']);

@@ -11,6 +11,7 @@ import { UserService } from '../../../services/user/user.service';
 export class ProfileComponent implements OnInit {
 
   currentUser: User;
+  manager : boolean;
   constructor(private us: UserService, private route: Router) { }
 
   ngOnInit() {
@@ -19,6 +20,11 @@ export class ProfileComponent implements OnInit {
       this.route.navigate(['/login']);
     } else{
       this.currentUser = JSON.parse(userString);
+      if(this.currentUser.role === "Employee"){
+        this.manager = false;
+      } else{
+        this.manager = true;
+      }
     }
   }
   
